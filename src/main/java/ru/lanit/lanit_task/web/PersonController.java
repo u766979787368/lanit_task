@@ -6,6 +6,8 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import ru.lanit.lanit_task.model.Person;
 import ru.lanit.lanit_task.repository.PersonRepository;
+import ru.lanit.lanit_task.util.exception.ExistException;
+import ru.lanit.lanit_task.util.exception.NotFoundException;
 
 import javax.validation.Valid;
 
@@ -20,12 +22,19 @@ public class PersonController {
     @PostMapping(value = "/person", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
     public void create(@Valid @RequestBody Person person) {
-        repository.save(person);
+        if (repository.existsById(person.getId())) {
+            throw new ExistException("Person with id " + person.getId() + " already exist");
+        } else {
+            repository.save(person);
+        }
     }
 
     @GetMapping("/personwithcars")
     public Person getWithCars(@RequestParam Long personid) {
-        Person person = repository.getWithCars(personid);
-        return person;
+        if (repository.existsById(personid)) {
+            return repository.getWithCars(personid);
+        } else {
+            throw new NotFoundException("Person with id " + personid + " doesn't exist");
+        }
     }
 }

@@ -28,7 +28,7 @@ public class RootController {
         Statistics statistics = new Statistics();
         statistics.setPersoncount(personRepository.count());
         statistics.setCarcount(carRepository.count());
-        statistics.setUniquevendorcount(100L);
+        statistics.setUniquevendorcount(carRepository.countModel());
 
         return statistics;
     }

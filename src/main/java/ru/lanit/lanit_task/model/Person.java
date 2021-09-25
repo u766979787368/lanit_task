@@ -3,6 +3,7 @@ package ru.lanit.lanit_task.model;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.springframework.format.annotation.DateTimeFormat;
+import ru.lanit.lanit_task.util.validation.NotFutureBirthdate;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -21,6 +22,7 @@ public class Person extends BaseEntity {
 
     @Column(name = "birthdate", nullable = false)
     @NotNull
+    @NotFutureBirthdate
     @DateTimeFormat(pattern = "dd.MM.yyyy")
     @JsonFormat(pattern = "dd.MM.yyyy")
     private LocalDate birthdate;

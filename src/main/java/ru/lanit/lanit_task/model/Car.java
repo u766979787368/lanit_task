@@ -1,11 +1,12 @@
 package ru.lanit.lanit_task.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import org.hibernate.validator.constraints.Range;
+import ru.lanit.lanit_task.util.validation.VendorModel;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "car")
@@ -13,17 +14,19 @@ public class Car extends BaseEntity {
 
     @NotBlank
     @NotNull
-    @Size(min = 2, max = 100)
+    @VendorModel
     @Column(name = "model")
     private String model;
 
     @NotNull
+    @Range(min = 1)
     @Column(name = "horsepower")
     private Integer horsepower;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "person_id")
     @JsonBackReference
+    @NotNull
     private Person person;
 
     public Car() {
@@ -35,6 +38,14 @@ public class Car extends BaseEntity {
 
     public void setModel(String model) {
         this.model = model;
+    }
+
+    public Person getPerson() {
+        return person;
+    }
+
+    public void setPerson(Person person) {
+        this.person = person;
     }
 
     public Integer getHorsepower() {
@@ -50,8 +61,9 @@ public class Car extends BaseEntity {
     }
 
     public void setOwnerid(Long id) {
-        person = new Person();
-        person.setId(id);
+        if (id != null) {
+            person = new Person();
+            person.setId(id);
+        }
     }
-
 }
