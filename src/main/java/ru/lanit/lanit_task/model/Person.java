@@ -1,13 +1,13 @@
 package ru.lanit.lanit_task.model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 @Entity
@@ -16,16 +16,44 @@ public class Person extends BaseEntity {
 
     @NotBlank
     @NotNull
-    @Size(min = 2, max = 100)
     @Column(name = "name", nullable = false)
     private String name;
 
     @Column(name = "birthdate", nullable = false)
     @NotNull
     @DateTimeFormat(pattern = "dd.MM.yyyy")
-    private Date birthdate;
+    @JsonFormat(pattern = "dd.MM.yyyy")
+    private LocalDate birthdate;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "person")
+    @JsonManagedReference
     private List<Car> cars;
 
+    public Person () {
+
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setBirthdate(LocalDate birthdate) {
+        this.birthdate = birthdate;
+    }
+
+    public void setCars(List<Car> cars) {
+        this.cars = cars;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public LocalDate getBirthdate() {
+        return birthdate;
+    }
+
+    public List<Car> getCars() {
+        return cars;
+    }
 }

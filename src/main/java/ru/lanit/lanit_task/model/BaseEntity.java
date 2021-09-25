@@ -1,12 +1,15 @@
 package ru.lanit.lanit_task.model;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import org.hibernate.Hibernate;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import static com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility.*;
 
 @MappedSuperclass
 @Access(AccessType.FIELD)
+@JsonAutoDetect(fieldVisibility = NONE, getterVisibility = ANY, isGetterVisibility = NONE, setterVisibility = ANY)
 public abstract class BaseEntity {
 
     @Id

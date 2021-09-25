@@ -14,10 +14,7 @@
        http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee.xsd">
 
     <context:component-scan base-package="ru.lanit.**.repository"/>
-
-    <context:property-placeholder location="classpath:db/h2.properties" system-properties-mode="OVERRIDE"/>
-
-    <tx:annotation-driven/>
+    <jpa:repositories base-package="ru.lanit.**.repository"/>
 
     <bean id="dataSource"
           class="org.springframework.jdbc.datasource.DriverManagerDataSource">
@@ -26,6 +23,22 @@
         <property name="username" value="${database.username}"/>
         <property name="password" value="${database.password}"/>
     </bean>
+
+    <jdbc:initialize-database data-source="dataSource" enabled="${database.init}">
+        <jdbc:script location="${jdbc.initLocation}"/>
+        <jdbc:script encoding="utf-8" location="classpath:db/populateDB.sql"/>
+    </jdbc:initialize-database>
+
+
+    <context:property-placeholder location="classpath:db/h2.properties" system-properties-mode="OVERRIDE"/>
+
+
+
+
+
+
+
+
 
     <bean id="org.h2.tools.Server"
           class="org.h2.tools.Server"
@@ -56,10 +69,7 @@
     <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager"
           p:entityManagerFactory-ref="entityManagerFactory"/>
 
-    <jdbc:initialize-database data-source="dataSource" enabled="${database.init}">
-        <jdbc:script location="${jdbc.initLocation}"/>
-        <jdbc:script encoding="utf-8" location="classpath:db/populateDB.sql"/>
-    </jdbc:initialize-database>
+
 
 
 </beans>
