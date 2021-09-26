@@ -32,6 +32,13 @@ public class Car extends BaseEntity {
     public Car() {
     }
 
+    public Car(Long id, String model, Integer horsepower, Long ownerid) {
+        super(id);
+        this.model = model;
+        this.horsepower = horsepower;
+        setOwnerid(ownerid);
+    }
+
     public String getModel() {
         return model;
     }

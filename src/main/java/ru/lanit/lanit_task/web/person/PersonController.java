@@ -1,4 +1,4 @@
-package ru.lanit.lanit_task.web;
+package ru.lanit.lanit_task.web.person;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

@@ -35,6 +35,12 @@ public class Person extends BaseEntity {
 
     }
 
+    public Person(Long id, String name, LocalDate birthdate) {
+        super(id);
+        this.name = name;
+        this.birthdate = birthdate;
+    }
+
     public void setName(String name) {
         this.name = name;
     }
