@@ -1,3 +1,9 @@
+ТЗ:
+
+![image](https://user-images.githubusercontent.com/77171265/148642898-303d0758-a188-4bcc-940d-dde426a92811.png)
+
+
+
 База данных - H2 in memory. Инициализирована следующими данными:
 
 ```
